@@ -1,0 +1,221 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: 'Satoshi', sans-serif;
+    background: #f9f9f9;
+    margin: 0;
+    color: #222;
+}
+
+.gallery-container {
+    max-width: 1440px;
+    
+    margin: 0 auto;
+    padding: 20px 40px;
+    box-sizing: border-box;}
+
+        .grid-sizer,
+        .grid-item {
+            width: calc(25% - 10px);
+            display: block;
+        }
+    
+        @media (max-width: 1024px) {
+    
+            .grid-sizer,
+            .grid-item {
+                width: 33.3333%;
+            }
+        }
+    
+        @media (max-width: 768px) {
+    
+            .grid-sizer,
+            .grid-item {
+                width: 50%;
+            }   }
+.grid-item {
+    transition: none;
+}
+
+.grid-item img {
+    width: 100%;
+    display: block;
+    border-radius: 12px;
+}
+
+.img-wrap {
+     overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+.img-wrap img {
+display: block;
+width: 100%;
+height: auto;
+transition: transform 0.3s ease;
+}
+
+.gallery-grid {
+    width: 100%;
+    max-width: 1440px;
+
+}
+
+
+
+.grid-item {
+    /* padding-left: 8px; */
+    padding-bottom: 10px;
+    box-sizing: border-box; 
+    
+}
+    
+.grid-item a:hover .img-wrap {
+transform: scale(1.02);
+box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+
+/* loader */
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: #007BFF;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto;
+    transition: opacity 0.3s ease;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.loader.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    } }
+
+
+/* load more btn */
+.load-more {
+    width: 56px;
+    height: 56px;
+    border: none;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px auto;
+    transition: transform 0.2s ease, background-color 0.3s ease, opacity 0.3s ease, scale 0.3s ease;
+    opacity: 1;
+    scale: 1;
+    position: sticky;
+    bottom: 40px;
+    z-index: 10;
+}
+
+.load-more:hover {
+    background-color: #e2e2e2;
+}
+
+.load-more:active {
+    transform: translateY(3px);
+}
+
+.load-more svg {
+    transition: stroke 0.3s ease;
+}
+
+.load-more:hover svg {
+    stroke: #333;
+}
+
+.load-more.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    scale: 0.8;
+}
+
+/* form */
+
+.form {
+    display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1440px;
+        margin: 0 auto 30px;
+        
+        width: 100%;
+        
+}
+.input {
+    flex: 1;
+    padding: 14px 20px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background-color: #fff;
+    color: #333;
+    width: 650px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+
+}
+
+.input:focus {
+    border-color: #007BFF;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+}
+
+.input::placeholder {
+    color: #999;
+    transition: opacity 0.2s;
+}
+
+.input:focus::placeholder {
+    opacity: 0.5; }
+        .submit-btn {
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: #007BFF;
+            cursor: pointer;
+            padding: 10px 16px;
+            transition: color 0.2s;
+            flex-shrink: 0;
+            text-align: center;
+        }
+    
+        .submit-btn:focus,
+        .submit-btn:hover {
+            color: #0056b3;
+        }
+    
+ .submit-btn:active {
+transform: scale(0.95)   }
+
+        
+
+
