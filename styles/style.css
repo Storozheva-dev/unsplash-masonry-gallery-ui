@@ -97,8 +97,9 @@ box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: none;
     z-index: 1000;
+    will-change: transform;
 }
 
 .loader.is-hidden {
@@ -171,7 +172,7 @@ box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 .input {
     flex: 1;
-    padding: 14px 20px;
+    padding: 10px;
     font-size: 16px;
     border: 1px solid #ddd;
     border-radius: 12px;
@@ -179,7 +180,7 @@ box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     transition: border-color 0.2s, box-shadow 0.2s;
     background-color: #fff;
     color: #333;
-    width: 650px;
+    width: 1200px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 
 }
@@ -215,6 +216,17 @@ box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     
  .submit-btn:active {
 transform: scale(0.95)   }
+.sl-wrapper {
+    position: fixed !important;
+    z-index: 99999 !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.sl-overlay {
+    z-index: 99998 !important; }
 
         
 

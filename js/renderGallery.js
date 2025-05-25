@@ -2,9 +2,8 @@ const loader = document.querySelector('.loader');
 const gallery = document.querySelector('.gallery-grid');
 const loadMoreBtn = document.querySelector('.load-more');
 
-let msnry;
-let lightbox;
 
+let msnry;
 function initMasonry() {
   msnry = new Masonry(gallery, {
     itemSelector: '.grid-item',
@@ -13,13 +12,6 @@ function initMasonry() {
     gutter: 10,
   });
 }
-
-// Ініціалізуємо лайтбокс один раз
-lightbox = new SimpleLightbox('.gallery-grid a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-  docClose: true, // тепер можна закрити по кліку поза зображенням
-});
 
 export function renderGallery(images, isFirstLoad = false) {
   if (!images.length) {
@@ -31,6 +23,7 @@ export function renderGallery(images, isFirstLoad = false) {
       position: 'topRight',
     });
     return;
+
   }
 
   if (isFirstLoad) {
@@ -43,14 +36,16 @@ export function renderGallery(images, isFirstLoad = false) {
   const markup = sizerMarkup + images
     .map(({ urls, alt_description }) => `
       <div class="grid-item">
-        <a href="${urls.full}">
-          <img src="${urls.regular}" alt="${alt_description || 'Photo'}" loading="lazy" />
-        </a>
+      <a data-fancybox="gallery" data-src="${urls.full}" data-caption="${alt_description || 'Photo'}" href="javascript:;">
+  <img src="${urls.regular}" alt="${alt_description || 'Photo'}" loading="lazy" />
+</a>
       </div>`)
     .join('');
-
+    
   gallery.insertAdjacentHTML('beforeend', markup);
-
+  
+  
+  
   imagesLoaded(gallery, () => {
     if (!msnry) {
       initMasonry();
@@ -60,13 +55,11 @@ export function renderGallery(images, isFirstLoad = false) {
       setTimeout(() => msnry.layout(), 100);
     }
 
-    if (lightbox) {
-      lightbox.refresh(); // 🔁 Оновлює посилання всередині lightbox
-    }
   });
 
   gallery.classList.remove('is-hidden');
   hideLoader();
+  
 }
 
 export function clearGallery() {

@@ -1,14 +1,25 @@
 import { getImagesByQuery, getRandomImages } from './js/unsplash.js';
-import { renderGallery, clearGallery, showLoader, hideLoader, showLoadMoreBtn, hideLoadMoreBtn, disableLoadMoreBtn, enableLoadMoreBtn } from './js/renderGallery.js';
-
-
-
+import {
+  renderGallery,
+  clearGallery,
+  showLoader,
+  hideLoader,
+  showLoadMoreBtn,
+  hideLoadMoreBtn,
+  disableLoadMoreBtn,
+  enableLoadMoreBtn,
+} from './js/renderGallery.js';
 
 const gallery = document.querySelector('.gallery-container');
 const form = document.querySelector('.form');
 const input = document.querySelector('[name="search-text"]');
 const loader = document.querySelector('.loader');
 const loadMoreBtn = document.querySelector('.load-more');
+
+let currentQuery = '';
+let currentPage = 1;
+const PER_PAGE = 24;
+let isRandomMode = true; // ✅ додали
 
 Notiflix.Notify.init({
   position: 'right-top',
@@ -17,39 +28,34 @@ Notiflix.Notify.init({
   fontSize: '16px',
 });
 
-
 function smoothScrollAfterLoad() {
+  requestAnimationFrame(() => {
     const firstItem = gallery.firstElementChild;
     if (!firstItem) return;
-  
+
     const { height: cardHeight } = firstItem.getBoundingClientRect();
-  
+
     window.scrollBy({
       top: cardHeight * 2,
       behavior: 'smooth',
     });
-  }
-
+  });
+}
 
 document.addEventListener('DOMContentLoaded', async () => {
-    showLoader();
-  
-    try {
-      const randomImages = await getRandomImages();
-      renderGallery(randomImages, true);
-    } catch (error) {
-      console.error('Error loading random images:', error);
-    } finally {
-      hideLoader();
-    }
-  });
+  showLoader();
 
-
-
-
-let currentQuery = '';
-let currentPage = 1;
-const PER_PAGE = 24;
+  try {
+    const randomImages = await getRandomImages();
+    renderGallery(randomImages, true);
+    showLoadMoreBtn();
+    isRandomMode = true; // ✅ активуємо режим "рандом"
+  } catch (error) {
+    Notiflix.Notify.failure('Error loading random images.');
+  } finally {
+    hideLoader();
+  }
+});
 
 hideLoadMoreBtn();
 
@@ -58,15 +64,13 @@ form.addEventListener('submit', async function (event) {
   const inputValue = input.value.trim();
 
   if (inputValue === '') {
-    iziToast.warning({
-      title: 'Caution',
-      message: 'You forgot important data',
-    });
+    Notiflix.Notify.warning('You forgot important data');
     return;
   }
 
   currentQuery = inputValue;
   currentPage = 1;
+  isRandomMode = false; // ✅ перемикаємо на "пошук"
 
   clearGallery();
   showLoader();
@@ -74,75 +78,57 @@ form.addEventListener('submit', async function (event) {
 
   try {
     const res = await getImagesByQuery(currentQuery, currentPage);
-    console.log('Search results:', res);
 
     if (res.length === 0) {
-      iziToast.warning({
-        title: 'Caution',
-        message: 'Sorry, no images matching your search query.',
-      });
+      Notiflix.Notify.warning('Sorry, no images matching your search query.');
       return;
     }
 
     renderGallery(res, true);
-
     showLoadMoreBtn();
-    enableLoadMoreBtn(); // 🟢 Включаем кнопку
-
+    enableLoadMoreBtn();
     currentPage++;
   } catch (error) {
-    console.error('Error: ', error);
-    iziToast.error({
-      title: 'Error',
-      message: 'Error fetching images.',
-    });
+    Notiflix.Notify.failure('Error fetching images.');
   } finally {
     hideLoader();
   }
 });
 
-
 loadMoreBtn.addEventListener('click', async () => {
-  disableLoadMoreBtn(); // 🔒 Блокируем кнопку
+  disableLoadMoreBtn();
   showLoader();
 
   try {
-    const res = await getImagesByQuery(currentQuery, currentPage);
-    console.log('More results:', res);
+    let res;
 
-    if (res.length === 0) {
-      iziToast.info({
-        title: 'Info',
-        message: 'No more images to load.',
-      });
+    if (isRandomMode) {
+      res = await getRandomImages(); // ✅ тепер вантажимо нові рандомні картинки
+    } else {
+      res = await getImagesByQuery(currentQuery, currentPage);
+    }
+
+    if (!res || res.length === 0) {
+      Notiflix.Notify.info('No more images to load.');
       hideLoadMoreBtn();
       return;
     }
 
-    renderGallery(res); 
+    renderGallery(res);
     smoothScrollAfterLoad();
 
-    showLoadMoreBtn(); // На всякий случай
-    enableLoadMoreBtn(); // 🔓 Разблокируем кнопку
+    if (!isRandomMode && res.length < PER_PAGE) {
+      Notiflix.Notify.info('You’ve reached the end of the results.');
+      hideLoadMoreBtn();
+      return;
+    }
 
-    currentPage++; 
+    showLoadMoreBtn();
+    enableLoadMoreBtn();
+    if (!isRandomMode) currentPage++;
   } catch (error) {
-    console.error('Error: ', error);
-    iziToast.error({
-      title: 'Error',
-      message: 'Could not load more images',
-    });
+    Notiflix.Notify.failure('Could not load more images');
   } finally {
     hideLoader();
   }
 });
-
-
-
-
-
-
-
-
-
-
