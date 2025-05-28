@@ -19,7 +19,7 @@ const loadMoreBtn = document.querySelector('.load-more');
 let currentQuery = '';
 let currentPage = 1;
 const PER_PAGE = 24;
-let isRandomMode = true; // ✅ додали
+let isRandomMode = true; 
 
 Notiflix.Notify.init({
   position: 'right-top',
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const randomImages = await getRandomImages();
     renderGallery(randomImages, true);
     showLoadMoreBtn();
-    isRandomMode = true; // ✅ активуємо режим "рандом"
+    isRandomMode = true; 
   } catch (error) {
     Notiflix.Notify.failure('Error loading random images.');
   } finally {
@@ -70,7 +70,7 @@ form.addEventListener('submit', async function (event) {
 
   currentQuery = inputValue;
   currentPage = 1;
-  isRandomMode = false; // ✅ перемикаємо на "пошук"
+  isRandomMode = false; 
 
   clearGallery();
   showLoader();
@@ -103,7 +103,7 @@ loadMoreBtn.addEventListener('click', async () => {
     let res;
 
     if (isRandomMode) {
-      res = await getRandomImages(); // ✅ тепер вантажимо нові рандомні картинки
+      res = await getRandomImages(); 
     } else {
       res = await getImagesByQuery(currentQuery, currentPage);
     }

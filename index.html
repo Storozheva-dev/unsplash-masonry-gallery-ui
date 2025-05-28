@@ -23,20 +23,24 @@
   </head>
   <body>
     <main class="gallery-container">
-      <form class="form">
-        <label>
-          <input
-            class="input"
-            type="text"
-            name="search-text"
-            placeholder="Search images by title, username..."
-            required
-          />
-        </label>
+      <div class="form-wrapper">
+        <form class="form">
+          <div class="input-wrapper">
+            <label>
+              <span class="icon">&#128269;</span>
+              <input
+                class="input"
+                type="text"
+                name="search-text"
+                placeholder="Search images by title, username..."
+                required
+              />
+            </label>
+          </div>
 
-        <button class="submit-btn" type="submit">Search</button>
-      </form>
-
+          <button class="submit-btn" type="submit">Search</button>
+        </form>
+      </div>
       <div class="loader is-hidden"></div>
 
       <div class="gallery-grid is-hidden">
@@ -59,6 +63,14 @@
         </svg>
       </button>
     </main>
+    <footer class="footer">
+      <p class="credits">
+        Photos provided by
+        <a href="https://unsplash.com" target="_blank" rel="noopener noreferrer"
+          >Unsplash</a
+        >
+      </p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.js"></script>
     <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>

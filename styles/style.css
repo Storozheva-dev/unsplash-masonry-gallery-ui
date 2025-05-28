@@ -19,26 +19,29 @@ body {
     padding: 20px 40px;
     box-sizing: border-box;}
 
-        .grid-sizer,
-        .grid-item {
-            width: calc(25% - 10px);
-            display: block;
-        }
+    /* library size */
+
+.grid-sizer,
+.grid-item {
+width: calc(25% - 10px);
+display: block;
+ }
     
-        @media (max-width: 1024px) {
+@media (max-width: 1024px) {
+.grid-sizer,
+.grid-item {
+ width: calc(33.333% - 10px);
+}
+}
+
+@media (max-width: 768px) {
+    .grid-sizer,
+    .grid-item {
+        width: calc(50% - 10px);
+    }
+}
     
-            .grid-sizer,
-            .grid-item {
-                width: 33.3333%;
-            }
-        }
-    
-        @media (max-width: 768px) {
-    
-            .grid-sizer,
-            .grid-item {
-                width: 50%;
-            }   }
+        
 .grid-item {
     transition: none;
 }
@@ -136,6 +139,19 @@ box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     z-index: 10;
 }
 
+@media (max-width: 480px) {
+    .load-more {
+        width: 40px;
+        height: 40px;
+        bottom: 20px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .load-more svg {
+        width: 20px;
+        height: 20px;
+    } }
+
 .load-more:hover {
     background-color: #e2e2e2;
 }
@@ -159,63 +175,92 @@ box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* form */
+.form {
+    display: flex;
+    
+    gap: 12px;
+    
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.form-wrapper {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 0 16px;
+}
 
 .form {
     display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1440px;
-        margin: 0 auto 30px;
-        
-        width: 100%;
-        
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    /* Щоб кнопка падала під інпут, якщо мало місця */
+    max-width: 700px;
+    margin: 0 auto;
 }
+
+.input-wrapper {
+    position: relative;
+    flex: 1 1 300px;
+    max-width: 100%;
+    min-width: 240px;
+}
+
 .input {
-    flex: 1;
-    padding: 10px;
+    width: 100%;
+    padding: 14px 20px 14px 42px;
+    /* залишаємо місце для іконки */
     font-size: 16px;
     border: 1px solid #ddd;
-    border-radius: 12px;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    border-radius: 16px;
     background-color: #fff;
     color: #333;
-    width: 1200px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
 .input:focus {
     border-color: #007BFF;
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.15);
+    outline: none;
+}
+
+.icon {
+    position: absolute;
+    top: 50%;
+    left: 16px;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #888;
+    pointer-events: none;
+}
+
+.submit-btn {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 16px;
+    background-color: #007BFF;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.2);
+    flex-shrink: 0;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.submit-btn:active {
+    transform: scale(0.96);
 }
 
 .input::placeholder {
-    color: #999;
-    transition: opacity 0.2s;
+    color: #aaa;
 }
-
-.input:focus::placeholder {
-    opacity: 0.5; }
-        .submit-btn {
-            background: none;
-            border: none;
-            font-size: 16px;
-            color: #007BFF;
-            cursor: pointer;
-            padding: 10px 16px;
-            transition: color 0.2s;
-            flex-shrink: 0;
-            text-align: center;
-        }
-    
-        .submit-btn:focus,
-        .submit-btn:hover {
-            color: #0056b3;
-        }
-    
- .submit-btn:active {
-transform: scale(0.95)   }
 .sl-wrapper {
     position: fixed !important;
     z-index: 99999 !important;
@@ -227,7 +272,21 @@ transform: scale(0.95)   }
 
 .sl-overlay {
     z-index: 99998 !important; }
-
+        .unsplash-credit {
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+            margin-top: 40px;
+        }
+    
+        .unsplash-credit a {
+            color: #999;
+            text-decoration: underline dotted;
+            transition: color 0.3s ease;
+        }
+    
+        .unsplash-credit a:hover {
+            color: #555;     }
         
 
 
